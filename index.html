@@ -1,0 +1,2916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>福州理工学院软件协会 | 以代码会友，把想法跑起来</title>
+<meta name="description" content="福州理工学院软件协会官方站点：技术分享、项目实战、竞赛集训与开源协作，面向全校招新，零基础可加入。">
+<meta name="keywords" content="福州理工学院,软件协会,计算机社团,编程,招新,技术分享,开源">
+<meta name="author" content="福州理工学院软件协会">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0e1a" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="福州理工学院软件协会">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="福州理工学院软件协会 | 以代码会友，把想法跑起来">
+<meta property="og:description" content="面向全校的技术成长社区：技术分享、项目实战、竞赛集训、开源协作。零基础也能从第一行代码走到第一个上线产品。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="福州理工学院软件协会">
+<meta name="twitter:description" content="面向全校的技术成长社区：技术分享、项目实战、竞赛集训、开源协作。">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "福州理工学院软件协会",
+  "alternateName": "Software Association of Fuzhou Institute of Technology",
+  "description": "福州理工学院面向全校的技术类学生社团，开展技术分享、项目实战、学科竞赛集训与开源协作。",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "福州市",
+    "addressRegion": "福建省",
+    "addressCountry": "CN"
+  },
+  "email": "software@fjit.edu.cn",
+  "knowsAbout": ["Web 开发", "移动开发", "算法竞赛", "人工智能", "网络安全"]
+}
+</script>
+<script>
+/* 首屏主题预设，避免闪白（FOUC）。与主脚本中的 applyTheme 保持一致 */
+(function () {
+  try {
+    var saved = localStorage.getItem('fit-sa-theme');
+    var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = saved === 'light' || saved === 'dark' ? saved : (sysDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+</script>
+<style>
+/* ============================================================
+   1. 设计令牌（亮 / 暗两套）
+   ============================================================ */
+:root {
+  --brand: #1d4ed8;
+  --brand-strong: #1e3a8a;
+  --accent: #06b6d4;
+  --cta: #f97316;
+  --bg: #ffffff;
+  --bg-soft: #f6f8fc;
+  --surface: #ffffff;
+  --surface-2: #eef3fb;
+  --text: #0f172a;
+  --text-muted: #5a6b83;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --grid-line: rgba(15, 23, 42, .055);
+  --glow-1: rgba(29, 78, 216, .13);
+  --glow-2: rgba(6, 182, 212, .13);
+  --header-bg: rgba(255, 255, 255, .78);
+  --shadow-1: 0 1px 2px rgba(15, 23, 42, .05), 0 4px 14px rgba(15, 23, 42, .05);
+  --shadow-2: 0 10px 34px rgba(15, 23, 42, .10);
+  --code-bg: #0d1117;
+  --code-text: #c9d1d9;
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --container: 1200px;
+  --header-h: 68px;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --brand: #3b82f6;
+  --brand-strong: #93c5fd;
+  --accent: #22d3ee;
+  --cta: #fb923c;
+  --bg: #0a0e1a;
+  --bg-soft: #0e1424;
+  --surface: #141b2d;
+  --surface-2: #1a2337;
+  --text: #e7ebf3;
+  --text-muted: #98a6bd;
+  --border: #243044;
+  --border-strong: #31405a;
+  --grid-line: rgba(148, 163, 184, .10);
+  --glow-1: rgba(59, 130, 246, .20);
+  --glow-2: rgba(34, 211, 238, .16);
+  --header-bg: rgba(10, 14, 26, .80);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .4);
+  --shadow-2: 0 12px 40px rgba(0, 0, 0, .5);
+  --code-bg: #0b1018;
+  color-scheme: dark;
+}
+
+/* ============================================================
+   2. 基础重置与排版
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+body {
+  font-family: system-ui, -apple-system, "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img, svg, video { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+ul, ol { list-style: none; padding: 0; }
+h1, h2, h3, h4 { line-height: 1.3; font-weight: 700; letter-spacing: -.012em; text-wrap: balance; }
+p { text-wrap: pretty; }
+strong { font-weight: 700; }
+::selection { background: var(--brand); color: #fff; }
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -80px;
+  z-index: 200;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: var(--brand);
+  color: #fff;
+  font-size: .875rem;
+  font-weight: 600;
+  transition: top .2s var(--ease);
+}
+.skip-link:focus { top: 12px; }
+
+/* ============================================================
+   3. 布局原语
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+.section { padding-block: 96px; }
+.section--soft { background: var(--bg-soft); }
+.section--tight { padding-block: 64px; }
+main { display: block; min-height: 60vh; }
+
+.grid { display: grid; gap: 24px; }
+.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.stack-sm > * + * { margin-top: 12px; }
+.muted { color: var(--text-muted); }
+.center { text-align: center; }
+
+/* ============================================================
+   4. 区块标题
+   ============================================================ */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--brand);
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+}
+.section-head { margin-bottom: 44px; }
+.section-head h2 {
+  margin-top: 12px;
+  font-size: clamp(1.55rem, 2.9vw, 2.1rem);
+  line-height: 1.25;
+}
+.section-head p { margin-top: 12px; color: var(--text-muted); max-width: 62ch; }
+.section-head--split {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   5. 按钮
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--radius-sm);
+  font-size: .9375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  border: 1px solid transparent;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease), background-color .18s var(--ease), border-color .18s var(--ease), color .18s var(--ease);
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn svg { width: 18px; height: 18px; }
+.btn--primary {
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(29, 78, 216, .22);
+}
+.btn--primary:hover { background: var(--brand-strong); box-shadow: 0 8px 24px rgba(29, 78, 216, .28); }
+html[data-theme="dark"] .btn--primary { color: #071322; }
+html[data-theme="dark"] .btn--primary:hover { background: var(--brand-strong); }
+.btn--cta {
+  background: var(--cta);
+  color: #241300;
+  box-shadow: 0 6px 20px rgba(249, 115, 22, .28);
+}
+.btn--cta:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.btn--ghost {
+  border-color: var(--border-strong);
+  color: var(--text);
+  background: transparent;
+}
+.btn--ghost:hover { border-color: var(--brand); color: var(--brand); background: color-mix(in srgb, var(--brand) 6%, transparent); }
+.btn--sm { padding: 9px 16px; font-size: .875rem; }
+.btn--block { width: 100%; }
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .9375rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+.link-arrow svg { width: 16px; height: 16px; transition: transform .18s var(--ease); }
+.link-arrow:hover svg { transform: translateX(3px); }
+
+/* ============================================================
+   6. 页头导航
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  height: var(--header-h);
+  background: var(--header-bg);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.site-header.is-scrolled {
+  border-bottom-color: var(--border);
+  box-shadow: 0 1px 16px rgba(15, 23, 42, .05);
+}
+.header-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; min-width: 0; }
+.brand__mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: linear-gradient(140deg, var(--brand), var(--accent));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(29, 78, 216, .25);
+}
+.brand__mark svg { width: 21px; height: 21px; }
+.brand__text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.brand__text b { font-size: 1rem; font-weight: 800; letter-spacing: .01em; white-space: nowrap; }
+.brand__text span {
+  font-size: .625rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-desktop { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.nav-desktop a {
+  position: relative;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: .9375rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color .16s var(--ease), background-color .16s var(--ease);
+}
+.nav-desktop a:hover { color: var(--text); background: var(--surface-2); }
+.nav-desktop a[aria-current="page"] { color: var(--brand); font-weight: 600; }
+.nav-desktop a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+}
+
+.header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  transition: color .16s var(--ease), background-color .16s var(--ease), border-color .16s var(--ease);
+}
+.icon-btn:hover { color: var(--text); background: var(--surface-2); border-color: var(--border); }
+.icon-btn svg { width: 19px; height: 19px; }
+.menu-btn { display: none; }
+
+/* 移动端抽屉 */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 90;
+  width: min(340px, 86vw);
+  height: 100dvh;
+  padding: calc(var(--header-h) + 12px) 20px 32px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  box-shadow: var(--shadow-2);
+  transform: translateX(102%);
+  visibility: hidden;
+  transition: transform .32s var(--ease), visibility .32s;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.drawer.is-open { transform: none; visibility: visible; }
+.drawer__nav { display: flex; flex-direction: column; gap: 2px; }
+.drawer__nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 14px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+}
+.drawer__nav a:hover { background: var(--surface-2); }
+.drawer__nav a[aria-current="page"] { color: var(--brand); background: color-mix(in srgb, var(--brand) 8%, transparent); font-weight: 600; }
+.drawer__nav a svg { width: 16px; height: 16px; opacity: .45; }
+.drawer__foot { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+.drawer__foot p { font-size: .8125rem; color: var(--text-muted); margin-bottom: 14px; }
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(8, 12, 24, .45);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .28s var(--ease), visibility .28s;
+}
+.backdrop.is-open { opacity: 1; visibility: visible; }
+
+/* ============================================================
+   7. 首页 Hero
+   ============================================================ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(56px, 9vw, 96px) clamp(64px, 9vw, 104px);
+  background: var(--bg);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, #000 25%, transparent 78%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, #000 25%, transparent 78%);
+  pointer-events: none;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(620px 420px at 12% 12%, var(--glow-1), transparent 70%),
+    radial-gradient(520px 380px at 88% 4%, var(--glow-2), transparent 70%);
+  pointer-events: none;
+}
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.06fr .94fr;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: .8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  box-shadow: var(--shadow-1);
+}
+.hero__badge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, .18);
+  animation: pulse 2.4s var(--ease) infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(34, 197, 94, .18); }
+  50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, .04); }
+}
+.hero h1 {
+  margin-top: 20px;
+  font-size: clamp(2.1rem, 5.2vw, 3.4rem);
+  line-height: 1.16;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+.hero h1 .grad {
+  background: linear-gradient(100deg, var(--brand) 10%, var(--accent) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero__sub {
+  margin-top: 20px;
+  font-size: clamp(1rem, 1.35vw, 1.0625rem);
+  line-height: 1.85;
+  color: var(--text-muted);
+  max-width: 46ch;
+}
+.hero__actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+.hero__meta {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  font-size: .8125rem;
+  color: var(--text-muted);
+}
+.hero__meta span { display: inline-flex; align-items: center; gap: 6px; }
+.hero__meta svg { width: 15px; height: 15px; color: var(--brand); }
+
+/* 代码窗口 */
+.codewin {
+  position: relative;
+  border-radius: 14px;
+  background: var(--code-bg);
+  border: 1px solid rgba(148, 163, 184, .18);
+  box-shadow: 0 24px 60px -12px rgba(2, 8, 23, .5), 0 0 0 1px rgba(255, 255, 255, .04) inset;
+  overflow: hidden;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: .8125rem;
+  line-height: 1.85;
+  color: var(--code-text);
+  transform: perspective(1200px) rotateY(-1.5deg);
+  transition: transform .5s var(--ease);
+}
+.codewin:hover { transform: perspective(1200px) rotateY(0deg); }
+.codewin__bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(148, 163, 184, .14);
+  background: rgba(255, 255, 255, .02);
+}
+.codewin__bar i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3d4450;
+}
+.codewin__bar i:nth-child(1) { background: #ff5f57; }
+.codewin__bar i:nth-child(2) { background: #febc2e; }
+.codewin__bar i:nth-child(3) { background: #28c840; }
+.codewin__file {
+  margin-left: 8px;
+  font-size: .75rem;
+  color: #8b949e;
+  letter-spacing: .02em;
+}
+.codewin__body {
+  padding: 16px 18px 18px;
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 2;
+}
+.tok-k { color: #ff7b72; }
+.tok-s { color: #a5d6ff; }
+.tok-f { color: #d2a8ff; }
+.tok-c { color: #8b949e; font-style: italic; }
+.tok-p { color: #79c0ff; }
+.tok-n { color: #ffa657; }
+
+/* ============================================================
+   8. 数据条
+   ============================================================ */
+.statbar {
+  border-block: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+.statbar__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+.stat { padding: 34px 20px; text-align: center; position: relative; }
+.stat + .stat::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 26%;
+  height: 48%;
+  width: 1px;
+  background: var(--border);
+}
+.stat__num {
+  font-size: clamp(1.7rem, 3.4vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  background: linear-gradient(120deg, var(--brand), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+.stat__label { margin-top: 6px; font-size: .875rem; color: var(--text-muted); }
+
+/* ============================================================
+   9. 卡片族
+   ============================================================ */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 26px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-1);
+  transition: transform .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--border));
+  box-shadow: var(--shadow-2);
+}
+.card h3 { font-size: 1.0625rem; }
+.card p { color: var(--text-muted); font-size: .9375rem; }
+
+.icon-tile {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--brand) 10%, transparent);
+  color: var(--brand);
+  margin-bottom: 18px;
+}
+.icon-tile svg { width: 22px; height: 22px; }
+.icon-tile--accent { background: color-mix(in srgb, var(--accent) 13%, transparent); color: var(--accent); }
+html[data-theme="dark"] .icon-tile--accent { color: #67e8f9; }
+
+.feature-card h3 { margin-bottom: 8px; }
+.feature-card p { line-height: 1.8; }
+
+/* 技术方向 */
+.direction {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: transform .2s var(--ease), border-color .2s var(--ease), background-color .2s var(--ease);
+}
+.direction:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 4%, var(--surface));
+}
+.direction svg { width: 22px; height: 22px; color: var(--brand); flex-shrink: 0; margin-top: 3px; }
+.direction b { display: block; font-size: .9375rem; }
+.direction span { font-size: .8125rem; color: var(--text-muted); }
+
+/* 徽标 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: .75rem;
+  font-weight: 600;
+  line-height: 1.6;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  width: fit-content;
+  flex-shrink: 0;
+}
+.badge--brand { background: color-mix(in srgb, var(--brand) 10%, transparent); color: var(--brand); border-color: transparent; }
+.badge--open { background: rgba(34, 197, 94, .12); color: #15803d; border-color: rgba(34, 197, 94, .25); }
+html[data-theme="dark"] .badge--open { color: #4ade80; }
+.badge--done { color: var(--text-muted); background: var(--surface-2); }
+.badge--cta { background: rgba(249, 115, 22, .14); color: #c2410c; border-color: rgba(249, 115, 22, .25); }
+html[data-theme="dark"] .badge--cta { color: #fdba74; }
+.tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-list .badge { font-weight: 500; font-size: .6875rem; }
+
+/* 活动卡 */
+.activity-card { padding: 0; overflow: hidden; }
+.activity-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px 0;
+}
+.activity-card__date {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: .75rem;
+  color: var(--text-muted);
+  letter-spacing: .02em;
+}
+.activity-card__body { padding: 12px 22px 20px; }
+.activity-card__body h3 { font-size: 1.0625rem; line-height: 1.5; }
+.activity-card__body p { margin-top: 8px; font-size: .9rem; line-height: 1.75; }
+.activity-card__foot {
+  margin-top: auto;
+  padding: 14px 22px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: .8125rem;
+  color: var(--text-muted);
+}
+.activity-card__foot span { display: inline-flex; align-items: center; gap: 5px; }
+.activity-card__foot svg { width: 14px; height: 14px; }
+.activity-card__more {
+  font-weight: 600;
+  color: var(--brand);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.activity-card__more svg { width: 15px; height: 15px; transition: transform .18s var(--ease); }
+.activity-card:hover .activity-card__more svg { transform: translateX(3px); }
+
+/* 项目卡 */
+.project-card { padding: 0; overflow: hidden; }
+.project-card__thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 88%, #000), color-mix(in srgb, var(--accent) 78%, #000));
+  color: #fff;
+  overflow: hidden;
+}
+.project-card:nth-child(2n) .project-card__thumb { background: linear-gradient(135deg, #1e3a8a, #0e7490); }
+.project-card:nth-child(3n) .project-card__thumb { background: linear-gradient(135deg, #0f766e, #1d4ed8); }
+.project-card__thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, .07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, .07) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.project-card__mono {
+  position: relative;
+  z-index: 1;
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  opacity: .95;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, .35);
+}
+.project-card__body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.project-card__body h3 { font-size: 1.0625rem; }
+.project-card__body p { font-size: .9rem; }
+.project-card__links { display: flex; gap: 14px; margin-top: auto; padding-top: 6px; }
+.project-card__links a, .project-card__links span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+.project-card__links svg { width: 15px; height: 15px; }
+.project-card__links .is-disabled { color: var(--text-muted); opacity: .6; pointer-events: none; }
+
+/* 成员卡 */
+.member-card { padding: 22px; align-items: flex-start; }
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(140deg, var(--brand), var(--accent));
+  margin-bottom: 16px;
+  letter-spacing: .02em;
+}
+html[data-theme="dark"] .avatar { color: #06101f; }
+.member-card b { font-size: 1rem; }
+.member-card__role { font-size: .8125rem; color: var(--brand); font-weight: 600; margin-top: 2px; }
+.member-card__desc { font-size: .875rem; color: var(--text-muted); margin-top: 8px; line-height: 1.7; }
+
+/* 引言 */
+.quote-card { padding: 26px; }
+.quote-card__mark { font-size: 2.4rem; line-height: 1; color: var(--brand); opacity: .35; font-family: Georgia, serif; }
+.quote-card p { margin-top: 6px; font-size: .9375rem; line-height: 1.85; color: var(--text); }
+.quote-card__by { margin-top: 18px; display: flex; align-items: center; gap: 10px; }
+.quote-card__by .avatar { width: 36px; height: 36px; font-size: .875rem; margin: 0; }
+.quote-card__by em { font-style: normal; font-size: .8125rem; color: var(--text-muted); display: block; }
+.quote-card__by b { font-size: .875rem; }
+
+/* 资源 */
+.res-path { padding: 24px; }
+.res-path h3 { display: flex; align-items: center; gap: 8px; font-size: 1.0625rem; }
+.res-path h3 svg { width: 19px; height: 19px; color: var(--brand); }
+.res-path ol { margin-top: 18px; display: flex; flex-direction: column; gap: 0; counter-reset: step; }
+.res-path li {
+  position: relative;
+  padding: 0 0 18px 30px;
+  counter-increment: step;
+  font-size: .9rem;
+}
+.res-path li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: .6875rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+  color: var(--brand);
+  font-family: ui-monospace, monospace;
+}
+.res-path li::after {
+  content: "";
+  position: absolute;
+  left: 9.5px;
+  top: 28px;
+  bottom: 4px;
+  width: 1px;
+  background: var(--border);
+}
+.res-path li:last-child { padding-bottom: 0; }
+.res-path li:last-child::after { display: none; }
+.res-path li b { display: block; font-weight: 600; }
+.res-path li span { font-size: .8125rem; color: var(--text-muted); }
+
+.res-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: border-color .18s var(--ease), background-color .18s var(--ease);
+}
+.res-item:hover { border-color: var(--brand); background: color-mix(in srgb, var(--brand) 4%, var(--surface)); }
+.res-item>svg { width: 20px; height: 20px; color: var(--brand); flex-shrink: 0; }
+.res-item b { display: block; font-size: .9rem; font-weight: 600; }
+.res-item span { font-size: .75rem; color: var(--text-muted); }
+.res-item__dl { margin-left: auto; color: var(--text-muted); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; }
+.res-item:hover .res-item__dl { color: var(--brand); background: color-mix(in srgb, var(--brand) 10%, transparent); }
+.res-item__dl svg { width: 17px; height: 17px; }
+
+/* ============================================================
+   10. 页头（内页）
+   ============================================================ */
+.page-head {
+  position: relative;
+  overflow: hidden;
+  padding-block: 64px 52px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+.page-head::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(520px 260px at 88% -10%, var(--glow-2), transparent 70%);
+  pointer-events: none;
+}
+.page-head__inner { position: relative; z-index: 1; }
+.page-head h1 {
+  margin-top: 10px;
+  font-size: clamp(1.9rem, 4.2vw, 2.7rem);
+  line-height: 1.22;
+}
+.page-head p { margin-top: 14px; color: var(--text-muted); max-width: 62ch; font-size: 1.0625rem; }
+
+/* ============================================================
+   11. 时间轴
+   ============================================================ */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, var(--brand), var(--accent), transparent);
+}
+.timeline li { position: relative; padding-bottom: 32px; }
+.timeline li:last-child { padding-bottom: 0; }
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 7px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 12%, transparent);
+}
+.timeline__year {
+  font-family: ui-monospace, monospace;
+  font-size: .8125rem;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: .04em;
+}
+.timeline__title { margin-top: 2px; font-size: 1rem; font-weight: 600; }
+.timeline__desc { margin-top: 4px; font-size: .9rem; color: var(--text-muted); line-height: 1.75; }
+
+/* ============================================================
+   12. 组织架构图
+   ============================================================ */
+.org { display: flex; flex-direction: column; align-items: center; }
+.org__top { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+.org__node {
+  padding: 16px 26px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--brand) 35%, var(--border));
+  background: color-mix(in srgb, var(--brand) 7%, var(--surface));
+  text-align: center;
+  min-width: 180px;
+}
+.org__node b { display: block; font-size: 1rem; }
+.org__node span { font-size: .8125rem; color: var(--text-muted); }
+.org__node--main {
+  background: linear-gradient(140deg, var(--brand), color-mix(in srgb, var(--accent) 55%, var(--brand)));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 10px 28px -8px rgba(29, 78, 216, .5);
+}
+.org__node--main span { color: rgba(255, 255, 255, .82); }
+.org__line { width: 2px; height: 30px; background: var(--border-strong); }
+.org__branch { position: relative; width: 100%; }
+.org__branch::before {
+  content: "";
+  display: block;
+  height: 2px;
+  background: var(--border-strong);
+  margin: 0 calc(12.5% - 6px);
+  border-radius: 2px;
+}
+.org__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.org__grid > .org__node { position: relative; min-width: 0; }
+.org__grid > .org__node::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -16px;
+  width: 2px;
+  height: 16px;
+  background: var(--border-strong);
+}
+
+/* ============================================================
+   13. 步骤条
+   ============================================================ */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; counter-reset: s; }
+.step { position: relative; padding-right: 16px; }
+.step::before {
+  content: counter(s);
+  counter-increment: s;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: .9375rem;
+  color: #fff;
+  background: linear-gradient(140deg, var(--brand), var(--accent));
+  box-shadow: 0 6px 16px -6px rgba(29, 78, 216, .6);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+.step::after {
+  content: "";
+  position: absolute;
+  left: 40px;
+  top: 20px;
+  right: 0;
+  height: 2px;
+  background: repeating-linear-gradient(to right, var(--border-strong) 0 6px, transparent 6px 12px);
+}
+.step:last-child::after { display: none; }
+.step b { display: block; font-size: .9375rem; }
+.step p { font-size: .875rem; color: var(--text-muted); margin-top: 4px; line-height: 1.7; }
+
+/* ============================================================
+   14. 筛选标签 & FAQ
+   ============================================================ */
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.filter-tabs button {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: .875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: all .16s var(--ease);
+}
+.filter-tabs button:hover { color: var(--text); border-color: var(--border-strong); }
+.filter-tabs button[aria-selected="true"] {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  font-weight: 600;
+}
+html[data-theme="dark"] .filter-tabs button[aria-selected="true"] { color: #071322; }
+
+.faq { border: 1px solid var(--border); border-radius: 14px; background: var(--surface); overflow: hidden; }
+.faq + .faq { margin-top: 10px; }
+.faq summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  font-weight: 600;
+  font-size: .9375rem;
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--brand); }
+.faq summary svg {
+  margin-left: auto;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform .24s var(--ease);
+}
+.faq[open] summary svg { transform: rotate(45deg); color: var(--brand); }
+.faq__body { padding: 0 22px 20px; color: var(--text-muted); font-size: .9375rem; line-height: 1.85; }
+
+/* ============================================================
+   15. CTA 横幅
+   ============================================================ */
+.cta-banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  padding: clamp(32px, 5vw, 56px);
+  background: linear-gradient(120deg, #12275c 0%, #1d4ed8 45%, #0e7490 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.cta-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, .07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, .07) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 100% at 100% 0%, #000, transparent 70%);
+  mask-image: radial-gradient(ellipse 80% 100% at 100% 0%, #000, transparent 70%);
+}
+.cta-banner > * { position: relative; z-index: 1; }
+.cta-banner h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: 1.3; }
+.cta-banner p { margin-top: 10px; color: rgba(255, 255, 255, .78); font-size: .9375rem; max-width: 46ch; }
+.cta-banner .btn--cta { background: #fff; color: #12275c; box-shadow: 0 8px 24px rgba(0, 0, 0, .18); }
+.cta-banner .btn--cta:hover { background: #f1f5f9; }
+.cta-banner .btn--ghost { border-color: rgba(255, 255, 255, .35); color: #fff; }
+.cta-banner .btn--ghost:hover { background: rgba(255, 255, 255, .1); border-color: #fff; color: #fff; }
+
+/* ============================================================
+   16. 页脚
+   ============================================================ */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--bg-soft);
+  padding-block: 56px 28px;
+  margin-top: 0;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+  gap: 40px;
+}
+.footer-brand p { margin-top: 14px; font-size: .875rem; color: var(--text-muted); line-height: 1.8; max-width: 34ch; }
+.footer-col h3 {
+  font-size: .8125rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.footer-col ul { display: flex; flex-direction: column; gap: 9px; }
+.footer-col a, .footer-col li { font-size: .875rem; color: var(--text-muted); }
+.footer-col a:hover { color: var(--brand); }
+.footer-col li { display: flex; align-items: center; gap: 7px; }
+.footer-col li svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--brand); }
+.footer-bottom {
+  margin-top: 44px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: .8125rem;
+  color: var(--text-muted);
+}
+.footer-bottom a:hover { color: var(--brand); }
+.footer-note { font-size: .75rem; opacity: .8; width: 100%; }
+
+/* ============================================================
+   17. 返回顶部 / 弹窗 / 404 / 其他
+   ============================================================ */
+.backtop {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 70;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  box-shadow: var(--shadow-2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: all .24s var(--ease);
+}
+.backtop.is-visible { opacity: 1; visibility: visible; transform: none; }
+.backtop:hover { color: var(--brand); border-color: var(--brand); }
+.backtop svg { width: 19px; height: 19px; }
+
+dialog.dialog {
+  width: min(660px, calc(100vw - 32px));
+  max-height: min(84dvh, 720px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 32px 80px -20px rgba(2, 8, 23, .55);
+  overflow: auto;
+}
+dialog.dialog::backdrop { background: rgba(8, 12, 24, .55); backdrop-filter: blur(3px); }
+.dialog__head {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.dialog__head h2 { font-size: 1.25rem; line-height: 1.4; }
+.dialog__head .badge { margin-bottom: 8px; }
+.dialog__body { padding: 20px 24px 26px; }
+.dialog__meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: .8125rem; color: var(--text-muted); margin-bottom: 16px; }
+.dialog__meta span { display: inline-flex; align-items: center; gap: 5px; }
+.dialog__meta svg { width: 15px; height: 15px; color: var(--brand); }
+.dialog__body p { font-size: .9375rem; line-height: 1.9; color: var(--text-muted); }
+.dialog__body p + p { margin-top: 12px; }
+.dialog__close { flex-shrink: 0; width: 34px; height: 34px; }
+
+.empty-state {
+  padding: 56px 24px;
+  text-align: center;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+}
+.empty-state svg { width: 34px; height: 34px; margin: 0 auto 12px; opacity: .5; }
+.empty-state p { font-size: .9375rem; }
+
+.notfound { padding-block: clamp(72px, 12vw, 140px); text-align: center; }
+.notfound__code {
+  font-size: clamp(4.5rem, 16vw, 9rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.04em;
+  background: linear-gradient(120deg, var(--brand), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.notfound h1 { margin-top: 16px; font-size: clamp(1.4rem, 3vw, 1.9rem); }
+.notfound p { margin-top: 12px; color: var(--text-muted); }
+.notfound .btn { margin-top: 28px; }
+
+/* 表格（获奖） */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+table.awards { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 480px; }
+table.awards th, table.awards td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); }
+table.awards th {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--bg-soft);
+}
+table.awards tr:last-child td { border-bottom: 0; }
+table.awards td:first-child { font-weight: 600; }
+table.awards td:last-child { color: var(--text-muted); font-family: ui-monospace, monospace; font-size: .8125rem; }
+
+/* ============================================================
+   18. 入场动效
+   ============================================================ */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .55s var(--ease), transform .55s var(--ease);
+}
+html.js .reveal.is-in { opacity: 1; transform: none; }
+html.js .reveal[data-delay="1"] { transition-delay: .06s; }
+html.js .reveal[data-delay="2"] { transition-delay: .12s; }
+html.js .reveal[data-delay="3"] { transition-delay: .18s; }
+html.js .reveal[data-delay="4"] { transition-delay: .24s; }
+
+/* ============================================================
+   18.5 补充组件（部门职责 / 教师卡 / 倒计时）
+   ============================================================ */
+.duty-list { display: flex; flex-direction: column; gap: 9px; margin-top: 16px; }
+.duty-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: .875rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+.duty-list li svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--brand); margin-top: 4px; }
+
+.teacher {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  padding: 32px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--brand);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+.teacher__avatar {
+  width: 72px;
+  height: 72px;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.countdown { display: flex; gap: 10px; margin-top: 20px; }
+.countdown > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 6px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+.countdown b {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(120deg, var(--brand), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.countdown span { font-size: .6875rem; color: var(--text-muted); }
+.countdown.is-over { display: none; }
+
+.prose p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   19. 响应式
+   ============================================================ */
+@media (max-width: 1023px) {
+  .nav-desktop { display: none; }
+  .menu-btn { display: grid; }
+  .header-actions { margin-left: auto; }
+  .hero__inner { grid-template-columns: 1fr; }
+  .codewin { transform: none; max-width: 640px; }
+  .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .org__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 34px; }
+  .org__branch::before { margin: 0 calc(25% - 6px); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+  .step:nth-child(2)::after { display: none; }
+}
+
+@media (max-width: 640px) {
+  .header-actions .btn--cta { display: none; }
+  .brand__text span { font-size: .5625rem; letter-spacing: .06em; }
+  .codewin__body { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .activity-card__body h3 { font-size: 1rem; }
+  .countdown b { font-size: 1.25rem; }
+}
+
+@media (max-width: 767px) {
+  :root { --header-h: 60px; }
+  .container { padding-inline: 20px; }
+  .section { padding-block: 60px; }
+  .section--tight { padding-block: 44px; }
+  .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; }
+  .statbar__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat { padding: 24px 14px; }
+  .stat:nth-child(3)::before, .stat:nth-child(odd)::before { display: none; }
+  .hero { padding-block: 40px 56px; }
+  .hero h1 { font-size: clamp(1.9rem, 8.6vw, 2.4rem); }
+  .hero__actions .btn { flex: 1 1 auto; }
+  .codewin { font-size: .72rem; }
+  .codewin__body { padding: 14px; }
+  .section-head--split { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .page-head { padding-block: 44px 36px; }
+  .cta-banner { flex-direction: column; align-items: flex-start; }
+  .cta-banner .btn { width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .org__grid { grid-template-columns: 1fr; row-gap: 26px; }
+  .org__branch { display: none; }
+  .org__grid > .org__node::before { display: none; }
+  .steps { grid-template-columns: 1fr; row-gap: 24px; }
+  .step { padding-left: 56px; padding-right: 0; }
+  .step::before { position: absolute; left: 0; top: 0; margin: 0; }
+  .step::after {
+    left: 19px;
+    top: 42px;
+    bottom: -22px;
+    right: auto;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(to bottom, var(--border-strong) 0 6px, transparent 6px 12px);
+    background-size: 2px 12px;
+  }
+  .table-wrap { border-radius: 12px; }
+  .card { padding: 22px; }
+  .activity-card, .project-card { padding: 0; }
+  .backtop { right: 14px; bottom: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html.js .reveal { opacity: 1; transform: none; }
+  .codewin { transform: none; }
+}
+
+@media print {
+  .site-header, .backtop, .drawer, .backdrop, .cta-banner { display: none !important; }
+  body { color: #000; background: #fff; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<!-- ===================== 页头 ===================== -->
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a class="brand" href="#/" aria-label="福州理工学院软件协会 首页">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-5 6 5 6"/><path d="m16 6 5 6-5 6"/></svg>
+      </span>
+      <span class="brand__text">
+        <b>软件协会</b>
+        <span>Software Association · FIT</span>
+      </span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="主导航">
+      <a href="#/">首页</a>
+      <a href="#/about">关于</a>
+      <a href="#/team">组织</a>
+      <a href="#/activities">活动</a>
+      <a href="#/projects">项目</a>
+      <a href="#/resources">资源</a>
+      <a href="#/join">加入我们</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="切换深色模式" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.9 4.9l1.4 1.4"/><path d="M17.7 17.7l1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.3 17.7l-1.4 1.4"/><path d="M19.1 4.9l-1.4 1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" hidden><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+      <a class="btn btn--cta btn--sm" href="#/join">加入我们</a>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="mobileDrawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="backdrop" id="drawerBackdrop" hidden></div>
+<aside class="drawer" id="mobileDrawer" aria-label="移动端导航" aria-hidden="true">
+  <nav class="drawer__nav">
+    <a href="#/">首页 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="#/about">关于我们 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="#/team">组织架构 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="#/activities">活动与赛事 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="#/projects">项目与成果 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="#/resources">学习资源 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="#/join">加入我们 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></a>
+    <a href="#/contact">联系我们 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></a>
+  </nav>
+  <div class="drawer__foot">
+    <p>福州理工学院软件协会 · 面向全校的技术成长社区</p>
+    <a class="btn btn--primary btn--block" href="#/join">报名加入</a>
+  </div>
+</aside>
+
+<main id="main" tabindex="-1">
+  <noscript>
+    <div class="container" style="padding:80px 0;text-align:center">
+      <h1>本站需要启用 JavaScript 才能浏览</h1>
+      <p class="muted" style="margin-top:12px">请在浏览器设置中开启 JavaScript，或使用最新版 Chrome / Edge / Safari 访问。</p>
+    </div>
+  </noscript>
+</main>
+
+<!-- ===================== 页脚 ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#/">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-5 6 5 6"/><path d="m16 6 5 6-5 6"/></svg>
+          </span>
+          <span class="brand__text"><b>软件协会</b><span>Software Association · FIT</span></span>
+        </a>
+        <p>福州理工学院软件协会，面向全校的技术成长社区。做分享、做项目、打比赛，也帮你从第一行代码走到第一个上线产品。</p>
+      </div>
+
+      <div class="footer-col">
+        <h3>快速链接</h3>
+        <ul>
+          <li><a href="#/">首页</a></li>
+          <li><a href="#/about">关于我们</a></li>
+          <li><a href="#/team">组织架构</a></li>
+          <li><a href="#/activities">活动与赛事</a></li>
+          <li><a href="#/projects">项目与成果</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>加入与资源</h3>
+        <ul>
+          <li><a href="#/join">招新报名</a></li>
+          <li><a href="#/resources">学习路线</a></li>
+          <li><a href="#/resources">课件与题库</a></li>
+          <li><a href="#/contact">联系我们</a></li>
+          <li><a href="#/join">常见问题</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>联系我们</h3>
+        <ul>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+            <a href="mailto:software@fjit.edu.cn">software@fjit.edu.cn</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            福建省福州市连江县 · 福州理工学院
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>
+            招新 QQ 群：123456789
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 福州理工学院软件协会 · 由协会技术部维护</span>
+      <span>
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">闽ICP备XXXXXXXX号</a>
+      </span>
+      <p class="footer-note">演示版本：站内数据与文案均为示例，正式上线前请替换为协会真实信息；校徽与照片的使用需获得校方及本人授权。</p>
+    </div>
+  </div>
+</footer>
+
+<button class="backtop" id="backTop" type="button" aria-label="返回顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+</button>
+
+<dialog class="dialog" id="activityDialog" aria-labelledby="dialogTitle">
+  <div class="dialog__head">
+    <div>
+      <span class="badge" id="dialogBadge">活动</span>
+      <h2 id="dialogTitle">活动详情</h2>
+    </div>
+    <button class="icon-btn dialog__close" id="dialogClose" type="button" aria-label="关闭详情">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+  <div class="dialog__body" id="dialogBody"></div>
+</dialog>
+
+<script>
+/* ============================================================
+   数据层：站内所有文案都在这里，改内容不需要动渲染代码
+   ⚠ 标注 [示例] 的数字与姓名请替换为协会真实信息
+   ============================================================ */
+
+/* 图标库（内联 SVG，24×24 描边，避免外部依赖） */
+const ICONS = {
+  code: '<path d="m8 6-5 6 5 6"/><path d="m16 6 5 6-5 6"/>',
+  terminal: '<path d="m4 17 6-6-6-6"/><path d="M12 19h8"/>',
+  users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  trophy: '<path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M17 5h3a2 2 0 0 1-2 4h-1"/><path d="M7 5H4a2 2 0 0 0 2 4h1"/>',
+  rocket: '<path d="M5 13c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M14 6c3-3 6-3 6-3s0 3-3 6l-5 5-4-4 6-4Z"/><path d="m9 11-4 1-2 3 4 1"/><path d="m13 15 1 4 3 2 1-4"/>',
+  brain: '<path d="M12 5a3 3 0 0 0-6 0 3 3 0 0 0-1 5.8A3 3 0 0 0 7 16a3 3 0 0 0 5 2V5Z"/><path d="M12 5a3 3 0 0 1 6 0 3 3 0 0 1 1 5.8A3 3 0 0 1 17 16a3 3 0 0 1-5 2V5Z"/>',
+  smartphone: '<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>',
+  shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>',
+  cpu: '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2"/><path d="M15 2v2"/><path d="M9 20v2"/><path d="M15 20v2"/><path d="M2 9h2"/><path d="M2 15h2"/><path d="M20 9h2"/><path d="M20 15h2"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z"/>',
+  layers: '<path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/>',
+  sparkles: '<path d="m12 3 1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15Z"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M3 11h18"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  pin: '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
+  mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/>',
+  github: '<path d="M9 19c-5 1.5-5-2.5-7-3"/><path d="M16 22v-3.9a3.4 3.4 0 0 0-.9-2.6c3.1-.4 5.9-1.5 5.9-6.1a4.7 4.7 0 0 0-1.3-3.3 4.4 4.4 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.7 11.7 0 0 0-6.4 0C7.4 2.6 6.4 2.9 6.4 2.9a4.4 4.4 0 0 0-.1 3.2A4.7 4.7 0 0 0 5 9.4c0 4.6 2.8 5.7 5.9 6.1a3.4 3.4 0 0 0-.9 2.6V22"/>',
+  external: '<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>',
+  book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>',
+  download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
+  check: '<path d="m20 6-11 11-5-5"/>',
+  arrow: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
+  plus: '<path d="M12 5v14"/><path d="M5 12h14"/>',
+  top: '<path d="M12 19V5"/><path d="m5 12 7-7 7 7"/>',
+  message: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  bulb: '<path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/>',
+  link: '<path d="M9.5 14.5 14.5 9.5"/><path d="M11 6.5l1.2-1.2a4.2 4.2 0 0 1 5.9 5.9L16.9 12.4"/><path d="M13 17.5l-1.2 1.2a4.2 4.2 0 0 1-5.9-5.9L7.1 11.6"/>',
+  trending: '<path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
+  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 6L8 16l2.5-6L16 8Z"/>',
+  star: '<path d="m12 3 2.6 5.6 6.1.8-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.4l6.1-.8L12 3Z"/>'
+};
+
+const DATA = {
+  site: {
+    name: '福州理工学院软件协会',
+    slogan: '以代码会友，把想法跑起来',
+    intro: '福州理工学院软件协会是一个面向全校的技术成长社区。我们做分享、做项目、打比赛，也帮你从第一行代码走到第一个上线产品。'
+  },
+
+  /* [示例] 首页数据条 */
+  stats: [
+    { value: 120, suffix: '+', label: '在校成员' },
+    { value: 30, suffix: '+', label: '年度活动场次' },
+    { value: 12, suffix: '', label: '在维护项目' },
+    { value: 20, suffix: '+', label: '学科竞赛奖项' }
+  ],
+
+  features: [
+    {
+      icon: 'terminal',
+      title: '每周技术分享',
+      desc: '「软协夜谈」每周一次，从 Git 基础到分布式系统，讲的人也是学生，问题可以随时打断。'
+    },
+    {
+      icon: 'layers',
+      title: '项目实战营',
+      desc: '两人一组的真实需求，从需求评审到上线运维走完一遍。做完的项目会留在协会继续维护。'
+    },
+    {
+      icon: 'trophy',
+      title: '竞赛集训',
+      desc: '蓝桥杯、天梯赛、ACM 校队选拔，赛前四周集中训练，往届学长学姐带练并整理题解。'
+    },
+    {
+      icon: 'github',
+      title: '开源协作',
+      desc: '协会所有项目开源在校内 Git 服务上，新人从修文档、改小 bug 开始参与，第一次 PR 有人 review。'
+    }
+  ],
+
+  directions: [
+    { icon: 'globe', name: 'Web 全栈', desc: 'React / Node / 数据库' },
+    { icon: 'smartphone', name: '移动开发', desc: '小程序 / Flutter' },
+    { icon: 'cpu', name: '算法与竞赛', desc: 'C++ / 数据结构 / 刷题' },
+    { icon: 'brain', name: 'AI 与数据', desc: 'Python / 机器学习' },
+    { icon: 'shield', name: '安全与运维', desc: 'Linux / 网络 / 渗透基础' }
+  ],
+
+  /* [示例] 首页成员说 */
+  quotes: [
+    {
+      text: '大一进来时我连 Git 都不会，第一次提交代码把整个分支搞乱了，是部长陪我回滚到凌晨一点。现在我自己带项目了。',
+      name: '陈同学',
+      meta: '2024 级 · 软件工程 · 技术部'
+    },
+    {
+      text: '训练营最有用的是「写不出来也要交」这条规矩。逼着自己把半成品交上去，被指出问题，比闷头看好几天教程快得多。',
+      name: '林同学',
+      meta: '2023 级 · 计算机科学与技术 · 算法方向'
+    },
+    {
+      text: '本来只是来蹭分享会，结果被拉去做协会官网。第一次上线那天挺神奇的——我写的页面，全校都能打开。',
+      name: '黄同学',
+      meta: '2024 级 · 数据科学与大数据技术 · 宣传部'
+    }
+  ],
+
+  /* 关于我们 */
+  about: {
+    intro: [
+      '福州理工学院软件协会是面向全校学生的技术类社团，由一群喜欢写代码、也喜欢把东西做出来的人组成。我们不限专业、不设门槛，只要你想动手做一个属于自己的作品，这里就有位置。',
+      '协会的日常由三部分组成：每周的技术分享、按学期推进的项目实战，以及围绕学科竞赛组织的集训。所有内容都由学生自己策划、自己讲、自己带，指导老师负责把关方向。'
+    ],
+    mission: {
+      title: '使命',
+      icon: 'target',
+      text: '让每一个想学技术的同学，都能在校园里找到同伴、找到项目、找到第一次被真实用户使用的机会。'
+    },
+    vision: {
+      title: '愿景',
+      icon: 'compass',
+      text: '成为福州理工学院最愿意分享、最能把想法落地成产品的技术社区。'
+    },
+    values: {
+      title: '价值观',
+      icon: 'star',
+      text: '先做出来，再谈优雅；把问题讲清楚，比把技术讲高深更重要；所有人对新人负责。'
+    },
+    /* [示例] 发展历程 */
+    timeline: [
+      { year: '20XX', title: '协会成立', desc: '由几名计算机相关专业的学生发起，第一次招新共 18 人。' },
+      { year: '20XX', title: '首届新生编程训练营', desc: '连续三周的基础训练营成形，成为此后每年固定的入门项目。' },
+      { year: '20XX', title: '承办校级程序设计竞赛', desc: '首次以协会为主体承担校级赛事的命题与评测环境搭建。' },
+      { year: '20XX', title: '项目组常设化', desc: '从「活动型社团」转向「项目 + 活动」双线，开始长期维护校园应用。' },
+      { year: '2026', title: '成员规模突破 120 人', desc: '覆盖全校多个专业，形成技术、宣传、组织、外联四个部门。' },
+      { year: '2026', title: '官网 v1.0 上线', desc: '由技术部与宣传部协作完成，作为对外展示与招新的统一入口。' }
+    ],
+    teacher: {
+      name: '王老师',
+      title: '指导教师 · 信息类专业',
+      words: '技术是在一次次动手和一次次被指出问题中长出来的。协会要做的，是让这个过程有人陪、有反馈、有成果。'
+    }
+  },
+
+  /* 组织架构 */
+  team: {
+    leads: [
+      { name: '陈同学', role: '会长', desc: '统筹协会整体运作，对接校团委与外部合作。', tags: ['全栈', '项目管理'] },
+      { name: '林同学', role: '副会长', desc: '负责项目线与技术分享排期，带项目组 review。', tags: ['后端', '数据库'] },
+      { name: '黄同学', role: '副会长', desc: '负责招新、活动与部门协同，协会对外形象把关。', tags: ['运营', '视觉'] }
+    ],
+    departments: [
+      {
+        name: '技术部',
+        icon: 'code',
+        lead: '吴同学',
+        duties: ['维护协会所有线上项目与官网', '组织每周技术分享与代码 review', '制定新人学习路线与训练营课件']
+      },
+      {
+        name: '宣传部',
+        icon: 'sparkles',
+        lead: '郑同学',
+        duties: ['活动海报、推文与短视频制作', '协会品牌视觉规范维护', '官网内容与项目介绍文案']
+      },
+      {
+        name: '组织部',
+        icon: 'calendar',
+        lead: '刘同学',
+        duties: ['活动策划、场地与物资协调', '招新流程与面试组织', '成员档案与考勤记录']
+      },
+      {
+        name: '外联部',
+        icon: 'link',
+        lead: '杨同学',
+        duties: ['对接企业参访与赞助合作', '联系兄弟社团与校级赛事', '校友资源与讲座嘉宾邀请']
+      }
+    ],
+    /* [示例] 成员名单，请替换为真实姓名 */
+    members: [
+      { name: '周同学', role: '技术部 · Web 方向负责人', desc: 'React / TypeScript，协会官网与二手平台主要开发者。', tags: ['前端', '设计系统'] },
+      { name: '许同学', role: '技术部 · 算法方向负责人', desc: '蓝桥杯省一，负责竞赛集训的题单与讲评。', tags: ['C++', '算法'] },
+      { name: '何同学', role: '技术部 · 移动端负责人', desc: '课表助手小程序作者，擅长小程序云开发。', tags: ['小程序', '云开发'] },
+      { name: '罗同学', role: '宣传部 · 视觉设计', desc: '负责协会海报与活动物料，视觉传达专业。', tags: ['Figma', '插画'] },
+      { name: '徐同学', role: '宣传部 · 内容运营', desc: '公众号「软协夜谈」栏目主笔，擅长把技术写成故事。', tags: ['写作', '排版'] },
+      { name: '孙同学', role: '组织部 · 活动策划', desc: '黑客松与训练营的总协调，流程控。', tags: ['策划', '执行'] },
+      { name: '朱同学', role: '外联部 · 合作对接', desc: '负责企业参访与讲座嘉宾联络。', tags: ['沟通', '资源'] },
+      { name: '马同学', role: '技术部 · 安全方向', desc: '校内 CTF 小队成员，负责 Linux 与网络基础分享。', tags: ['Linux', 'CTF'] }
+    ]
+  },
+
+  /* 活动与赛事（[示例] 日期与内容） */
+  activities: [
+    {
+      id: 'a1',
+      type: '技术分享',
+      date: '2026-11-30',
+      time: '19:00 – 21:00',
+      place: '图书馆报告厅 / 线上同步',
+      title: '从 0 写一个校园二手交易平台',
+      excerpt: '需求拆解、数据库设计、接口约定，现场演示一个能跑通的最小版本。',
+      status: 'open',
+      detail: [
+        '这场分享会把一个「校园二手交易平台」从想法拆到能跑：先画清楚三张表（用户、商品、订单），再定义四个核心接口，最后现场用 40 分钟写出一版能登录、能发布商品的最小可用版本。',
+        '不需要任何框架基础，带上电脑跟着敲就行。现场会给出完整仓库地址，讲完可以直接 fork 继续改。分享结束后有一小时自由提问，也可以带着自己的项目来问。'
+      ]
+    },
+    {
+      id: 'a2',
+      type: '训练营',
+      date: '2026-11-16',
+      time: '每周六 14:00 – 17:00',
+      place: '实验楼 A305',
+      title: '新生编程训练营 · 第 3 期',
+      excerpt: '三周从零基础到能独立完成一个小工具，包含结营项目答辩。',
+      status: 'done',
+      detail: [
+        '训练营共三周，每周一次线下课加一次线上答疑。第一周讲环境搭建与基础语法，第二周讲如何读文档、如何调试，第三周做一个小工具（命令行待办清单或网页计算器），最后一天答辩。',
+        '本期共 46 人报名，38 人完成结营项目。所有课件与录屏已整理到「学习资源」页面，可以自行取用。'
+      ]
+    },
+    {
+      id: 'a3',
+      type: '竞赛',
+      date: '2026-10-26',
+      time: '09:00 – 12:00',
+      place: '计算机学院机房',
+      title: '蓝桥杯校内选拔赛',
+      excerpt: '校内选拔，成绩优异者进入协会集训队，代表学校参加省赛。',
+      status: 'done',
+      detail: [
+        '选拔赛采用线上评测，题目难度对标省赛，共 10 题、时长 3 小时，允许使用 C++ / Java / Python。排名前 30 的同学进入集训队。',
+        '集训从 11 月开始，每周两次集中训练加一次题解讲评，寒假期间安排模拟赛。去年集训队成员中有 9 人获得省级奖项。'
+      ]
+    },
+    {
+      id: 'a4',
+      type: '黑客松',
+      date: '2026-10-12',
+      time: '48 小时',
+      place: '创新创业中心',
+      title: '48 小时校园 Hackathon',
+      excerpt: '自由组队，48 小时做出一个能演示的产品，评委由老师与企业工程师组成。',
+      status: 'done',
+      detail: [
+        '本届主题是「让校园生活更方便一点」，共 14 支队伍、63 人参加。作品包括失物招领、食堂排队查询、课程笔记共享等。',
+        '评分维度为完成度、实用性与技术难度，最终「课表助手」获得一等奖。所有项目代码已归档在协会 Git 组织下。'
+      ]
+    },
+    {
+      id: 'a5',
+      type: '技术分享',
+      date: '2026-09-20',
+      time: '19:00 – 20:30',
+      place: '线上 · 腾讯会议',
+      title: 'Git 与团队协作入门',
+      excerpt: '分支模型、冲突解决、Pull Request 流程，新人第一次协作必听。',
+      status: 'done',
+      detail: [
+        '很多人第一次多人协作就被冲突吓退。这场分享用一个模拟仓库完整走一遍：建分支、提交、发起 PR、被 review、改代码、合并，以及冲突发生时到底在发生什么。',
+        '配套讲义与命令速查表已上传到学习资源页，建议边看边在本地操作一遍。'
+      ]
+    },
+    {
+      id: 'a6',
+      type: '团建',
+      date: '2026-12-14',
+      time: '18:30 – 21:30',
+      place: '学生活动中心',
+      title: '期末技术嘉年华',
+      excerpt: '项目路演 + 颁奖 + 自由交流，本学期最后一次全员活动。',
+      status: 'open',
+      detail: [
+        '学期末的固定节目：各项目组用 5 分钟展示本学期成果，评选「最佳项目」「最佳新人」「最受欢迎分享」，之后是自由交流与零食。',
+        '欢迎带朋友一起来，也欢迎已经毕业的学长学姐回来看看。报名请留意群公告。'
+      ]
+    }
+  ],
+
+  activityTypes: ['全部', '技术分享', '训练营', '竞赛', '黑客松', '团建'],
+
+  /* 项目与成果（[示例]） */
+  projects: [
+    {
+      name: '校园二手交易平台',
+      mono: 'SHOP',
+      group: '官方项目',
+      desc: '面向校内学生的二手物品交易平台，支持发布、搜索与站内私信，目前处于内测阶段。',
+      stack: ['React', 'Node.js', 'MySQL'],
+      repo: '#/projects',
+      demo: '',
+      status: '维护中'
+    },
+    {
+      name: '课表助手小程序',
+      mono: 'CLASS',
+      group: '官方项目',
+      desc: '导入课表、上课提醒、空闲教室查询，累计服务校内在用用户 800+。',
+      stack: ['微信小程序', '云开发'],
+      repo: '',
+      demo: '',
+      status: '已上线'
+    },
+    {
+      name: '协会官网',
+      mono: 'SITE',
+      group: '官方项目',
+      desc: '你现在正在看的这个页面。单文件实现、零外部依赖，方便后续同学接手维护。',
+      stack: ['HTML', 'CSS', 'Vanilla JS'],
+      repo: '',
+      demo: '',
+      status: '已上线'
+    },
+    {
+      name: '图书馆座位提醒',
+      mono: 'SEAT',
+      group: '成员项目',
+      desc: '定时检查图书馆空座并通过微信推送提醒，个人项目，代码已开源供学习。',
+      stack: ['Python', '定时任务'],
+      repo: '',
+      demo: '',
+      status: '个人维护'
+    },
+    {
+      name: '新生算法题库',
+      mono: 'OJ',
+      group: '成员项目',
+      desc: '按专题整理入门题单，配套题解与讲解视频，训练营的主要练习入口。',
+      stack: ['Vue 3', 'Markdown'],
+      repo: '',
+      demo: '',
+      status: '维护中'
+    },
+    {
+      name: '校园失物招领',
+      mono: 'FIND',
+      group: '成员项目',
+      desc: '黑客松参赛作品，48 小时内完成从设计到部署，获最佳实用奖。',
+      stack: ['Next.js', 'Prisma', 'PostgreSQL'],
+      repo: '',
+      demo: '',
+      status: '已归档'
+    }
+  ],
+
+  /* [示例] 获奖记录 */
+  awards: [
+    { name: '蓝桥杯全国软件和信息技术专业人才大赛 · 省赛', prize: '一等奖', year: '2026', who: '许同学 等 2 人' },
+    { name: '中国大学生计算机设计大赛 · 省赛', prize: '二等奖', year: '2026', who: '周同学 等 3 人' },
+    { name: 'ICPC 国际大学生程序设计竞赛 · 省赛', prize: '铜奖', year: '2026', who: '协会集训队' },
+    { name: '中国高校计算机大赛 · 团体程序设计天梯赛', prize: '团队三等奖', year: '2026', who: '协会集训队' },
+    { name: '校级程序设计竞赛', prize: '优秀组织奖', year: '2025', who: '软件协会' }
+  ],
+
+  /* 学习资源 */
+  roadmaps: [
+    {
+      title: '前端路线',
+      icon: 'globe',
+      steps: [
+        { t: 'HTML / CSS 基础', d: '能照着设计稿写出静态页面' },
+        { t: 'JavaScript 核心', d: '变量、函数、异步、DOM 操作' },
+        { t: '框架入门', d: 'React 或 Vue 二选一，理解组件与状态' },
+        { t: '工程化', d: '构建工具、包管理、Git 协作' },
+        { t: '做一个上线的项目', d: '部署到公网，能被别人打开' }
+      ]
+    },
+    {
+      title: '后端路线',
+      icon: 'terminal',
+      steps: [
+        { t: '一门语言', d: 'Python / Java / Go 任选其一' },
+        { t: '数据库基础', d: 'SQL、索引、简单建模' },
+        { t: 'Web 框架', d: '路由、鉴权、接口设计' },
+        { t: 'Linux 与部署', d: '命令行、Nginx、进程管理' },
+        { t: '性能与安全', d: '缓存、限流、常见漏洞防护' }
+      ]
+    },
+    {
+      title: '算法路线',
+      icon: 'cpu',
+      steps: [
+        { t: '语法与输入输出', d: 'C++ 基础、复杂度概念' },
+        { t: '基础数据结构', d: '数组、栈、队列、链表、哈希' },
+        { t: '基础算法', d: '排序、二分、贪心、递归' },
+        { t: '图论与动态规划', d: '最短路、并查集、背包' },
+        { t: '刷题与比赛', d: '按专题刷题、参加线上赛' }
+      ]
+    }
+  ],
+
+  downloads: [
+    { name: '前端入门讲义 v2.1', meta: 'PDF · 3.2 MB · 2026 春季更新' },
+    { name: 'Git 命令速查表', meta: 'PDF · 420 KB · 含常见冲突处理' },
+    { name: '新生训练营第 3 期课件', meta: 'ZIP · 12.6 MB · 含录屏链接' },
+    { name: '算法入门题单（120 题）', meta: 'PDF · 1.1 MB · 按专题分类' }
+  ],
+
+  tools: [
+    { name: 'Git', desc: '版本控制与协作的基础' },
+    { name: 'VS Code', desc: '轻量趁手的编辑器' },
+    { name: 'Linux', desc: '服务器与命令行必备' },
+    { name: 'Docker', desc: '一致的开发与部署环境' },
+    { name: 'Postman', desc: '接口调试与文档' },
+    { name: 'Figma', desc: '界面设计与协作' }
+  ],
+
+  /* 招新 */
+  join: {
+    target: '面向全校各专业同学，大一至大三均可报名。不要求任何编程基础，只要求两件事：愿意动手，愿意被人指出问题。',
+    deadline: '2026-12-20T23:59:59+08:00',
+    steps: [
+      { t: '填写报名表', d: '线上表单，约 3 分钟，选一个意向部门' },
+      { t: '面试 / 笔试', d: '技术部有简单笔试，其他部门以聊天为主' },
+      { t: '试用期', d: '一个月，参与一次活动筹备或一个小任务' },
+      { t: '正式成员', d: '双向确认后加入，领协会周边' }
+    ],
+    departments: [
+      { name: '技术部', want: '愿意花时间写代码，能接受代码被 review 后大改。' },
+      { name: '宣传部', want: '会写、会画、会剪视频，或愿意学其中任意一项。' },
+      { name: '组织部', want: '细致、靠谱、能盯住细节，喜欢把活动从头跟到尾。' },
+      { name: '外联部', want: '不怕开口，愿意主动联系企业与兄弟社团。' }
+    ],
+    formUrl: 'https://wj.qq.com/',
+    qq: '123456789',
+    faq: [
+      { q: '零基础可以加入吗？', a: '可以，而且我们大部分成员进来时都是零基础。技术部有新生训练营和一对一带新，前两个月基本都在学基础，不需要你先学会再来。' },
+      { q: '加入需要交会费吗？', a: '不需要。协会的日常开销由学校和合作支持，训练营、分享会、内部资料都免费。个别需要自费的项目（如外出参访的交通）会提前说明。' },
+      { q: '和课程冲突怎么办？', a: '活动基本安排在晚上和周末，考试周会暂停。如果某段时间课业压力大，可以随时请假，不会因此被清退。' },
+      { q: '非计算机专业能进技术部吗？', a: '能。技术部有来自软件工程、数据科学、电子信息等不同专业的成员，也有文科转方向的同学。我们看的是投入程度，不是专业。' },
+      { q: '一周大概要花多少时间？', a: '常规情况每周 3–5 小时：一次分享会加一点自己的练习时间。做项目或备赛期间会更多，但那部分是自愿的。' },
+      { q: '面试会很难吗？', a: '不会。技术部笔试是基础逻辑与简单编程，允许查资料；其他部门主要是聊聊你为什么想加入、能投入多少时间。真诚比技巧重要。' }
+    ]
+  },
+
+  contact: {
+    email: 'software@fjit.edu.cn',
+    qq: '123456789',
+    wechat: '福州理工学院软件协会',
+    address: '福建省福州市连江县 · 福州理工学院',
+    hours: '工作日下午 16:00 后 · 周末全天',
+    cooperate: '我们欢迎企业技术分享、实习推荐、赛事共建等形式的合作，也欢迎兄弟社团联合办活动。请通过邮箱联系我们，说明来意与时间安排。'
+  }
+};
+/* ============================================================
+   视图层：纯函数，输入数据、输出 HTML 字符串
+   ============================================================ */
+
+const icon = (name, cls) =>
+  '<svg' + (cls ? ' class="' + cls + '"' : '') +
+  ' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"' +
+  ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  (ICONS[name] || '') + '</svg>';
+
+const fmtDate = (iso) => iso.replace(/-/g, '.');
+
+const pageHead = (eyebrow, title, lead) => `
+<section class="page-head">
+  <div class="container page-head__inner">
+    <span class="eyebrow">${eyebrow}</span>
+    <h1>${title}</h1>
+    <p>${lead}</p>
+  </div>
+</section>`;
+
+const sectionHead = (eyebrow, title, desc, link) => `
+<div class="section-head ${link ? 'section-head--split' : ''}">
+  <div>
+    <span class="eyebrow">${eyebrow}</span>
+    <h2>${title}</h2>
+    ${desc ? `<p>${desc}</p>` : ''}
+  </div>
+  ${link ? `<a class="link-arrow" href="${link.href}">${link.text}${icon('arrow')}</a>` : ''}
+</div>`;
+
+const ctaBanner = () => `
+<section class="section">
+  <div class="container">
+    <div class="cta-banner reveal">
+      <div>
+        <h2>招新进行中，报名截止 12 月 20 日</h2>
+        <p>不限专业、零基础可加入。填一张三分钟的表，剩下的我们带你走。</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn--cta" href="#/join">填写报名表${icon('arrow')}</a>
+        <a class="btn btn--ghost" href="#/about">先了解协会</a>
+      </div>
+    </div>
+  </div>
+</section>`;
+
+const activityCard = (a, delay) => `
+<article class="card activity-card reveal" data-delay="${delay || 0}">
+  <div class="activity-card__top">
+    <span class="badge badge--brand">${a.type}</span>
+    <span class="badge ${a.status === 'open' ? 'badge--open' : 'badge--done'}">${a.status === 'open' ? '报名中' : '已结束'}</span>
+  </div>
+  <div class="activity-card__body">
+    <h3>${a.title}</h3>
+    <p>${a.excerpt}</p>
+  </div>
+  <div class="activity-card__foot">
+    <span>${icon('calendar')}${fmtDate(a.date)}</span>
+    <button class="activity-card__more" type="button" data-activity="${a.id}">查看详情${icon('arrow')}</button>
+  </div>
+</article>`;
+
+const projectCard = (p, delay) => {
+  const links = [];
+  if (p.repo) links.push(`<a href="${p.repo}">${icon('github')}源码</a>`);
+  if (p.demo) links.push(`<a href="${p.demo}">${icon('external')}在线体验</a>`);
+  if (!links.length) links.push(`<span class="is-disabled">${icon('github')}源码待公开</span>`);
+  return `
+<article class="card project-card reveal" data-delay="${delay || 0}">
+  <div class="project-card__thumb" aria-hidden="true"><span class="project-card__mono">${p.mono}</span></div>
+  <div class="project-card__body">
+    <div class="tag-list">${p.stack.map(s => `<span class="badge">${s}</span>`).join('')}</div>
+    <h3>${p.name}</h3>
+    <p>${p.desc}</p>
+    <div class="project-card__links">
+      ${links.join('')}
+      <span class="badge" style="margin-left:auto">${p.status}</span>
+    </div>
+  </div>
+</article>`;
+};
+
+const memberCard = (m, delay) => `
+<article class="card member-card reveal" data-delay="${delay || 0}">
+  <div class="avatar" aria-hidden="true">${m.name.slice(0, 1)}</div>
+  <b>${m.name}</b>
+  <div class="member-card__role">${m.role}</div>
+  <p class="member-card__desc">${m.desc}</p>
+  <div class="tag-list" style="margin-top:14px">${m.tags.map(t => `<span class="badge">${t}</span>`).join('')}</div>
+</article>`;
+
+/* ---------------------------- 首页 ---------------------------- */
+function viewHome() {
+  const stats = DATA.stats.map(s => `
+    <div class="stat">
+      <div class="stat__num"><span data-count="${s.value}">${s.value}</span>${s.suffix}</div>
+      <div class="stat__label">${s.label}</div>
+    </div>`).join('');
+
+  const features = DATA.features.map((f, i) => `
+    <article class="card feature-card reveal" data-delay="${i}">
+      <div class="icon-tile ${i % 2 ? 'icon-tile--accent' : ''}">${icon(f.icon)}</div>
+      <h3>${f.title}</h3>
+      <p>${f.desc}</p>
+    </article>`).join('');
+
+  const directions = DATA.directions.map(d => `
+    <a class="direction" href="#/resources">
+      ${icon(d.icon)}
+      <span><b>${d.name}</b><span>${d.desc}</span></span>
+    </a>`).join('');
+
+  const quotes = DATA.quotes.map((q, i) => `
+    <article class="card quote-card reveal" data-delay="${i}">
+      <div class="quote-card__mark" aria-hidden="true">“</div>
+      <p>${q.text}</p>
+      <div class="quote-card__by">
+        <div class="avatar" aria-hidden="true">${q.name.slice(0, 1)}</div>
+        <div><b>${q.name}</b><em>${q.meta}</em></div>
+      </div>
+    </article>`).join('');
+
+  return `
+<section class="hero">
+  <div class="container hero__inner">
+    <div>
+      <span class="hero__badge"><span class="dot" aria-hidden="true"></span>福州理工学院 · 校级技术社团</span>
+      <h1>以代码会友<br><span class="grad">把想法跑起来</span></h1>
+      <p class="hero__sub">软件协会是一个面向全校的技术成长社区。我们做分享、做项目、打比赛，也帮你从第一行代码走到第一个上线产品。</p>
+      <div class="hero__actions">
+        <a class="btn btn--cta" href="#/join">加入我们${icon('arrow')}</a>
+        <a class="btn btn--ghost" href="#/activities">看看我们在做什么</a>
+      </div>
+      <div class="hero__meta">
+        <span>${icon('check')}零基础可加入</span>
+        <span>${icon('check')}每周技术分享</span>
+        <span>${icon('check')}全校招新</span>
+      </div>
+    </div>
+
+    <div class="codewin" aria-hidden="true">
+      <div class="codewin__bar"><i></i><i></i><i></i><span class="codewin__file">association.ts</span></div>
+      <div class="codewin__body"><span class="tok-c">// 协会名片：改这里就能改整站信息</span>
+<span class="tok-k">const</span> <span class="tok-p">association</span> = {
+  name: <span class="tok-s">'福州理工学院软件协会'</span>,
+  motto: <span class="tok-s">'以代码会友，把想法跑起来'</span>,
+  tracks: [<span class="tok-s">'Web'</span>, <span class="tok-s">'Mobile'</span>, <span class="tok-s">'Algorithm'</span>],
+  members: <span class="tok-n">120</span>,
+};
+
+<span class="tok-k">export function</span> <span class="tok-f">join</span>(you) {
+  <span class="tok-k">return</span> association.tracks.<span class="tok-f">map</span>(t <span class="tok-k">=&gt;</span> <span class="tok-f">learn</span>(t, you));
+}
+
+<span class="tok-c">// 下一期：11 月 30 日 19:00 · 图书馆报告厅</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="statbar" aria-label="协会数据">
+  <div class="container"><div class="statbar__grid">${stats}</div></div>
+</section>
+
+<section class="section">
+  <div class="container">
+    ${sectionHead('我们做什么', '一年下来，你能带走什么', '不是听完一场讲座就结束的那种。每一样都有具体的产出和可以拿出来看的东西。')}
+    <div class="grid cols-4">${features}</div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    ${sectionHead('技术方向', '五个方向，先挑一个开始', '方向之间不设壁垒，很多人最后都会串着用。', { href: '#/resources', text: '查看学习路线' })}
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr))">${directions}</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    ${sectionHead('近期活动', '接下来会发生什么', '分享、训练营、比赛与团建，全部对全校开放。', { href: '#/activities', text: '查看全部活动' })}
+    <div class="grid cols-3">${DATA.activities.slice(0, 3).map((a, i) => activityCard(a, i)).join('')}</div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    ${sectionHead('精选项目', '我们真的把东西做出来了', '代码留在协会，成果交给全校用。', { href: '#/projects', text: '查看全部项目' })}
+    <div class="grid cols-3">${DATA.projects.slice(0, 3).map((p, i) => projectCard(p, i)).join('')}</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    ${sectionHead('成员说', '他们进来时也什么都不会', '')}
+    <div class="grid cols-3">${quotes}</div>
+  </div>
+</section>
+
+${ctaBanner()}`;
+}
+
+/* ---------------------------- 关于 ---------------------------- */
+function viewAbout() {
+  const a = DATA.about;
+  const values = [a.mission, a.vision, a.values].map((v, i) => `
+    <article class="card reveal" data-delay="${i}">
+      <div class="icon-tile ${i === 1 ? 'icon-tile--accent' : ''}">${icon(v.icon)}</div>
+      <h3>${v.title}</h3>
+      <p style="margin-top:8px">${v.text}</p>
+    </article>`).join('');
+
+  const timeline = a.timeline.map(t => `
+    <li>
+      <div class="timeline__year">${t.year}</div>
+      <div class="timeline__title">${t.title}</div>
+      <p class="timeline__desc">${t.desc}</p>
+    </li>`).join('');
+
+  return `
+${pageHead('关于我们', '一群想把东西做出来的人', '协会的日常由三部分组成：每周的技术分享、按学期推进的项目实战，以及围绕学科竞赛组织的集训。')}
+
+<section class="section">
+  <div class="container">
+    <div class="grid cols-2" style="gap:56px;align-items:start">
+      <div class="prose reveal">
+        ${a.intro.map(p => `<p style="margin-bottom:16px;color:var(--text-muted);font-size:1.0625rem;line-height:1.95">${p}</p>`).join('')}
+      </div>
+      <div class="grid" style="gap:16px">${values}</div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    ${sectionHead('发展历程', '从 18 个人开始', '')}
+    <ol class="timeline">${timeline}</ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="teacher reveal">
+      <div class="avatar teacher__avatar" aria-hidden="true">师</div>
+      <div>
+        <span class="eyebrow">指导教师</span>
+        <h3 style="margin-top:10px;font-size:1.25rem">${a.teacher.name}</h3>
+        <p class="muted" style="font-size:.875rem">${a.teacher.title}</p>
+        <p style="margin-top:16px;font-size:1rem;line-height:1.95;color:var(--text)">“${a.teacher.words}”</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+${ctaBanner()}`;
+}
+
+/* ---------------------------- 组织架构 ---------------------------- */
+function viewTeam() {
+  const t = DATA.team;
+  const leads = t.leads.map(m => `
+    <div class="org__node ${m.role === '会长' ? 'org__node--main' : ''}">
+      <b>${m.role}</b><span>${m.name}</span>
+    </div>`).join('');
+
+  const deptNodes = t.departments.map(d => `
+    <div class="org__node"><b>${d.name}</b><span>${d.lead}</span></div>`).join('');
+
+  const deptCards = t.departments.map((d, i) => `
+    <article class="card reveal" data-delay="${i}">
+      <div class="icon-tile">${icon(d.icon)}</div>
+      <h3>${d.name}</h3>
+      <p style="font-size:.8125rem;margin-top:4px">部长：${d.lead}</p>
+      <ul class="duty-list">
+        ${d.duties.map(x => `<li>${icon('check')}<span>${x}</span></li>`).join('')}
+      </ul>
+    </article>`).join('');
+
+  return `
+${pageHead('组织架构', '四个部门，一起把事做成', '协会设会长团统筹全局，下设技术、宣传、组织、外联四个部门，各部门之间有明确分工，也经常交叉协作。')}
+
+<section class="section">
+  <div class="container">
+    <div class="org reveal">
+      <div class="org__top">${leads}</div>
+      <div class="org__line" aria-hidden="true"></div>
+      <div class="org__branch">
+        <div class="org__grid">${deptNodes}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    ${sectionHead('部门职责', '每个部门具体在做什么', '')}
+    <div class="grid cols-4">${deptCards}</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    ${sectionHead('现任成员', '写代码的人，长这样', '名单按部门排列，随时可能更新——因为总有人在成长。', { href: '#/join', text: '成为其中一员' })}
+    <div class="grid cols-4">${t.members.map((m, i) => memberCard(m, i % 4)).join('')}</div>
+  </div>
+</section>`;
+}
+
+/* ---------------------------- 活动 ---------------------------- */
+function activityGrid(list, keepStatus) {
+  if (!list.length) {
+    return `<div class="empty-state">${icon('calendar')}<p>这个分类暂时还没有活动，换个标签看看。</p></div>`;
+  }
+  return list.map((a, i) => activityCard(a, i % 3)).join('');
+}
+
+function viewActivities() {
+  const tabs = DATA.activityTypes.map((t, i) => `
+    <button type="button" role="tab" aria-selected="${i === 0}" data-type="${t}">${t}</button>`).join('');
+
+  return `
+${pageHead('活动与赛事', '活动不止是听讲，是要动手', '技术分享、训练营、竞赛、黑客松与团建，全部对全校开放。点开任意一张卡可以看到详细安排。')}
+
+<section class="section">
+  <div class="container">
+    <div class="filter-tabs" role="tablist" aria-label="按活动类型筛选">${tabs}</div>
+    <div class="grid cols-3" id="activityGrid" role="tabpanel">${activityGrid(DATA.activities)}</div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="grid cols-2" style="gap:32px;align-items:center">
+      <div class="reveal">
+        <span class="eyebrow">活动节奏</span>
+        <h2 style="margin-top:12px;font-size:clamp(1.5rem,2.8vw,2rem)">一个学期，大概是这样过的</h2>
+        <p class="muted" style="margin-top:14px">开学招新 → 新生训练营 → 每周分享 → 校内选拔赛 → 黑客松 → 期末路演。节奏固定，但内容每学期都换。</p>
+      </div>
+      <div class="grid" style="gap:12px">
+        ${['开学两周内完成招新与分组', '第 3–6 周：新生训练营 + 每周分享', '第 7–12 周：竞赛集训 + 项目推进', '第 13–16 周：黑客松、期末路演与颁奖']
+          .map((x, i) => `<div class="res-item reveal" data-delay="${i}" style="cursor:default">${icon('check')}<div><b>${x}</b></div></div>`).join('')}
+      </div>
+    </div>
+  </div>
+</section>
+
+${ctaBanner()}`;
+}
+
+/* ---------------------------- 项目 ---------------------------- */
+function viewProjects() {
+  const groups = ['官方项目', '成员项目'];
+  const blocks = groups.map((g, gi) => {
+    const list = DATA.projects.filter(p => p.group === g);
+    if (!list.length) return '';
+    return `
+<section class="section ${gi % 2 ? 'section--soft' : ''}">
+  <div class="container">
+    ${sectionHead(g === '官方项目' ? '官方项目' : '成员项目', g === '官方项目' ? '协会在维护的东西' : '成员自己折腾出来的东西', g === '官方项目'
+      ? '这些项目由协会项目组长期维护，有明确的负责人和迭代计划。'
+      : '个人或小团队的作品，不保证持续维护，但代码和思路都值得看。')}
+    <div class="grid cols-3">${list.map((p, i) => projectCard(p, i)).join('')}</div>
+  </div>
+</section>`;
+  }).join('');
+
+  const rows = DATA.awards.map(a => `
+    <tr><td>${a.name}</td><td>${a.prize}</td><td>${a.who}</td><td>${a.year}</td></tr>`).join('');
+
+  return `
+${pageHead('项目与成果', '能跑起来的作品，才算数', '协会的项目从校园真实需求出发：二手交易、课表、失物招领、座位提醒。做完不算完，要有人用、有人维护。')}
+
+${blocks}
+
+<section class="section">
+  <div class="container">
+    ${sectionHead('竞赛获奖', '近两年主要奖项', '集训队每年从校内选拔赛中产生，寒假集中训练，春季出战省赛。')}
+    <div class="table-wrap reveal">
+      <table class="awards">
+        <thead><tr><th scope="col">赛事</th><th scope="col">奖项</th><th scope="col">获奖人</th><th scope="col">年份</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+${ctaBanner()}`;
+}
+
+/* ---------------------------- 资源 ---------------------------- */
+function viewResources() {
+  const paths = DATA.roadmaps.map((r, i) => `
+    <article class="card res-path reveal" data-delay="${i}">
+      <h3>${icon(r.icon)}${r.title}</h3>
+      <ol>${r.steps.map(s => `<li><b>${s.t}</b><span>${s.d}</span></li>`).join('')}</ol>
+    </article>`).join('');
+
+  const files = DATA.downloads.map((f, i) => `
+    <a class="res-item reveal" data-delay="${i % 3}" href="#/resources" aria-label="下载 ${f.name}">
+      ${icon('file')}
+      <div><b>${f.name}</b><span>${f.meta}</span></div>
+      <span class="res-item__dl">${icon('download')}</span>
+    </a>`).join('');
+
+  const tools = DATA.tools.map((t, i) => `
+    <div class="card reveal" data-delay="${i % 3}" style="padding:18px 20px">
+      <b style="font-size:.9375rem">${t.name}</b>
+      <p style="font-size:.8125rem;margin-top:2px">${t.desc}</p>
+    </div>`).join('');
+
+  return `
+${pageHead('学习资源', '路线、课件、题库，都在这里', '所有资料由协会成员整理，仅供内部学习交流。发现错误欢迎在群里指出，我们会更新版本。')}
+
+<section class="section">
+  <div class="container">
+    ${sectionHead('学习路线', '别一上来就啃完所有教程', '按顺序走，每一步都以「做出一个能给别人看的东西」为终点。')}
+    <div class="grid cols-3">${paths}</div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    ${sectionHead('课件与题库', '往期资料下载', '', { href: '#/contact', text: '申请补充资料' })}
+    <div class="grid cols-2" style="gap:12px">${files}</div>
+    <p class="muted" style="margin-top:18px;font-size:.8125rem">提示：资料仅供协会内部学习交流，请勿外传或用于商业用途。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    ${sectionHead('常用工具', '先把工具装好', '装完这六个，大学四年的开发基本够用。')}
+    <div class="grid cols-3">${tools}</div>
+  </div>
+</section>
+
+${ctaBanner()}`;
+}
+
+/* ---------------------------- 招新 ---------------------------- */
+function viewJoin() {
+  const j = DATA.join;
+  const steps = j.steps.map(s => `
+    <div class="step"><b>${s.t}</b><p>${s.d}</p></div>`).join('');
+
+  const depts = j.departments.map((d, i) => `
+    <article class="card reveal" data-delay="${i}" style="padding:22px">
+      <b style="font-size:1rem">${d.name}</b>
+      <p style="margin-top:6px;font-size:.875rem">${d.want}</p>
+    </article>`).join('');
+
+  const faq = j.faq.map(f => `
+    <details class="faq">
+      <summary>${f.q}${icon('plus')}</summary>
+      <div class="faq__body">${f.a}</div>
+    </details>`).join('');
+
+  return `
+${pageHead('加入我们', '零基础也能从今天开始', '招新面向全校，不设专业门槛。我们更在意你愿不愿意花时间，而不是你现在会多少。')}
+
+<section class="section">
+  <div class="container">
+    <div class="grid cols-2" style="gap:48px;align-items:start">
+      <div class="reveal">
+        ${sectionHead('招新对象', '我们在找什么样的人', '')}
+        <p style="color:var(--text-muted);font-size:1.0625rem;line-height:1.95">${j.target}</p>
+        <div class="grid" style="gap:12px;margin-top:28px">${depts}</div>
+      </div>
+      <div class="card reveal" data-delay="1" style="padding:28px">
+        <span class="badge badge--cta">报名进行中</span>
+        <h3 style="margin-top:14px;font-size:1.25rem">距离本轮报名截止</h3>
+        <div class="countdown" id="countdown" aria-live="polite">
+          <div><b data-cd="d">--</b><span>天</span></div>
+          <div><b data-cd="h">--</b><span>时</span></div>
+          <div><b data-cd="m">--</b><span>分</span></div>
+          <div><b data-cd="s">--</b><span>秒</span></div>
+        </div>
+        <p class="muted" style="margin-top:18px;font-size:.875rem">截止时间：2026 年 12 月 20 日 23:59。面试安排会在报名后三天内通过短信或群公告通知。</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:22px">
+          <a class="btn btn--cta btn--block" href="${j.formUrl}" target="_blank" rel="noopener noreferrer">填写报名表${icon('external')}</a>
+          <a class="btn btn--ghost btn--block" href="#/contact">先加群问问${icon('message')}</a>
+        </div>
+        <p class="muted" style="margin-top:14px;font-size:.75rem">招新 QQ 群：${j.qq}（报名表链接为示例，请替换为协会真实表单）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    ${sectionHead('招新流程', '四步，一个月内走完', '')}
+    <div class="steps">${steps}</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:860px">
+    ${sectionHead('常见问题', '你可能想问的', '')}
+    ${faq}
+  </div>
+</section>`;
+}
+
+/* ---------------------------- 联系 ---------------------------- */
+function viewContact() {
+  const c = DATA.contact;
+  const items = [
+    { icon: 'mail', label: '邮箱', value: c.email, href: 'mailto:' + c.email },
+    { icon: 'message', label: '招新 QQ 群', value: c.qq, href: '#/join' },
+    { icon: 'sparkles', label: '微信公众号', value: c.wechat, href: '' },
+    { icon: 'pin', label: '活动地点', value: c.address, href: '' }
+  ].map((it, i) => `
+    <div class="card reveal" data-delay="${i}">
+      <div class="icon-tile ${i % 2 ? 'icon-tile--accent' : ''}">${icon(it.icon)}</div>
+      <p style="font-size:.8125rem;color:var(--text-muted)">${it.label}</p>
+      <b style="font-size:1rem;margin-top:4px;word-break:break-all">${it.value}</b>
+    </div>`).join('');
+
+  return `
+${pageHead('联系我们', '有事直接找我们', '合作、投稿、问问题，都可以从下面任意一个渠道开始。我们通常在工作日晚上回消息。')}
+
+<section class="section">
+  <div class="container">
+    <div class="grid cols-4">${items}</div>
+  </div>
+</section>
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="grid cols-2" style="gap:32px;align-items:stretch">
+      <div class="card reveal" style="padding:32px">
+        <span class="eyebrow">合作与投稿</span>
+        <h2 style="margin-top:12px;font-size:1.5rem">想一起做点什么</h2>
+        <p style="margin-top:14px;color:var(--text-muted);line-height:1.95">${DATA.contact.cooperate}</p>
+        <a class="btn btn--primary" style="margin-top:22px;align-self:flex-start" href="mailto:${c.email}">发邮件给我们${icon('arrow')}</a>
+      </div>
+      <div class="card reveal" data-delay="1" style="padding:32px">
+        <span class="eyebrow">值班时间</span>
+        <h2 style="margin-top:12px;font-size:1.5rem">什么时候能找到人</h2>
+        <ul class="duty-list" style="margin-top:18px">
+          <li>${icon('clock')}<span>${c.hours}</span></li>
+          <li>${icon('pin')}<span>${c.address}</span></li>
+          <li>${icon('message')}<span>群内 @ 任意一位部长都可以</span></li>
+          <li>${icon('mail')}<span>${c.email}</span></li>
+        </ul>
+        <p class="muted" style="margin-top:20px;font-size:.8125rem">考试周与寒暑假回复会慢一些，请见谅。</p>
+      </div>
+    </div>
+  </div>
+</section>`;
+}
+
+/* ---------------------------- 404 ---------------------------- */
+function viewNotFound() {
+  return `
+<section class="notfound">
+  <div class="container">
+    <div class="notfound__code" aria-hidden="true">404</div>
+    <h1>这个页面被 merge 掉了</h1>
+    <p>链接可能写错了，也可能我们重构时把它删了。<br>回首页看看，或者直接去找招新报名。</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px">
+      <a class="btn btn--primary" href="#/">返回首页${icon('arrow')}</a>
+      <a class="btn btn--ghost" href="#/join">加入我们</a>
+    </div>
+  </div>
+</section>`;
+}
+/* ============================================================
+   路由表 + 页面元信息
+   ============================================================ */
+const ROUTES = {
+  '/': {
+    view: viewHome,
+    title: '福州理工学院软件协会 | 以代码会友，把想法跑起来',
+    desc: '福州理工学院软件协会官方站点：技术分享、项目实战、竞赛集训与开源协作，面向全校招新，零基础可加入。'
+  },
+  '/about': {
+    view: viewAbout,
+    title: '关于我们 | 福州理工学院软件协会',
+    desc: '了解福州理工学院软件协会的定位、使命愿景、发展历程与指导教师。'
+  },
+  '/team': {
+    view: viewTeam,
+    title: '组织架构 | 福州理工学院软件协会',
+    desc: '协会设会长团统筹全局，下设技术部、宣传部、组织部、外联部，查看部门职责与现任成员。'
+  },
+  '/activities': {
+    view: viewActivities,
+    title: '活动与赛事 | 福州理工学院软件协会',
+    desc: '技术分享、新生训练营、蓝桥杯校内选拔、48 小时黑客松与期末技术嘉年华，全部对全校开放。'
+  },
+  '/projects': {
+    view: viewProjects,
+    title: '项目与成果 | 福州理工学院软件协会',
+    desc: '校园二手交易平台、课表助手小程序、协会官网等官方与成员项目，以及近两年竞赛获奖记录。'
+  },
+  '/resources': {
+    view: viewResources,
+    title: '学习资源 | 福州理工学院软件协会',
+    desc: '前端、后端、算法三条学习路线，往期课件、题单与常用工具推荐。'
+  },
+  '/join': {
+    view: viewJoin,
+    title: '加入我们 | 福州理工学院软件协会',
+    desc: '招新面向全校各专业，零基础可报名。四步流程：填表、面试、试用期、正式成员。'
+  },
+  '/contact': {
+    view: viewContact,
+    title: '联系我们 | 福州理工学院软件协会',
+    desc: '邮箱、招新 QQ 群、微信公众号与活动地点，合作与投稿请通过邮箱联系。'
+  }
+};
+
+/* ============================================================
+   运行时
+   ============================================================ */
+const byId = (id) => document.getElementById(id);
+const prefersReduced = () =>
+  !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+let firstRender = true;
+let revealObserver = null;
+let countdownTimer = null;
+
+function currentPath() {
+  let h = window.location.hash || '';
+  if (h.charAt(0) === '#') h = h.slice(1);
+  if (!h) return '/';
+  if (h.charAt(0) !== '/') h = '/' + h;
+  if (h.length > 1 && h.slice(-1) === '/') h = h.slice(0, -1);
+  return h.split('?')[0];
+}
+
+/* ---------- 主题 ---------- */
+function syncThemeUI(theme) {
+  const btn = byId('themeToggle');
+  if (!btn) return;
+  const isDark = theme === 'dark';
+  btn.setAttribute('aria-pressed', String(isDark));
+  btn.setAttribute('aria-label', isDark ? '切换到浅色模式' : '切换到深色模式');
+  const sun = btn.querySelector('.icon-sun');
+  const moon = btn.querySelector('.icon-moon');
+  // SVGElement 没有 hidden 这个 IDL 属性，必须走 setAttribute
+  if (sun) {
+    if (isDark) sun.removeAttribute('hidden');
+    else sun.setAttribute('hidden', '');
+  }
+  if (moon) {
+    if (isDark) moon.setAttribute('hidden', '');
+    else moon.removeAttribute('hidden');
+  }
+}
+
+function applyTheme(theme, persist) {
+  document.documentElement.setAttribute('data-theme', theme);
+  syncThemeUI(theme);
+  if (persist) {
+    try { localStorage.setItem('fit-sa-theme', theme); } catch (e) { /* 隐私模式下忽略 */ }
+  }
+}
+
+function initTheme() {
+  const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  syncThemeUI(current);
+  const btn = byId('themeToggle');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next, true);
+  });
+}
+
+/* ---------- 移动端抽屉 ---------- */
+function initDrawer() {
+  const btn = byId('menuBtn');
+  const drawer = byId('mobileDrawer');
+  const backdrop = byId('drawerBackdrop');
+  if (!btn || !drawer || !backdrop) return;
+
+  backdrop.hidden = false;
+  let lastFocused = null;
+
+  function open() {
+    lastFocused = document.activeElement;
+    drawer.classList.add('is-open');
+    backdrop.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    btn.setAttribute('aria-expanded', 'true');
+    btn.setAttribute('aria-label', '关闭菜单');
+    document.body.style.overflow = 'hidden';
+    const first = drawer.querySelector('a, button');
+    if (first) first.focus();
+  }
+
+  function close() {
+    if (!drawer.classList.contains('is-open')) return;
+    drawer.classList.remove('is-open');
+    backdrop.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', '打开菜单');
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  btn.addEventListener('click', function () {
+    if (drawer.classList.contains('is-open')) close(); else open();
+  });
+  backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) close();
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 1023) close();
+  });
+  window.__closeDrawer = close;
+}
+
+/* ---------- 入场动效 ---------- */
+function initReveal() {
+  const nodes = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if (!nodes.length) return;
+  if (prefersReduced() || !('IntersectionObserver' in window)) {
+    nodes.forEach(function (n) { n.classList.add('is-in'); });
+    return;
+  }
+  if (revealObserver) revealObserver.disconnect();
+  revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        en.target.classList.add('is-in');
+        revealObserver.unobserve(en.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  nodes.forEach(function (n) { revealObserver.observe(n); });
+}
+
+/* ---------- 数字滚动 ---------- */
+function initCounters() {
+  const nodes = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+  if (!nodes.length) return;
+  const setFinal = function (el) { el.textContent = String(el.getAttribute('data-count')); };
+  if (prefersReduced() || !('IntersectionObserver' in window)) {
+    nodes.forEach(setFinal);
+    return;
+  }
+  const run = function (el) {
+    const target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    const duration = 1100;
+    const start = performance.now();
+    let done = false;
+    // 兜底：无论 rAF 是否被节流，都保证最终落到真实数值
+    const finish = function () {
+      if (done) return;
+      done = true;
+      el.textContent = String(target);
+    };
+    const step = function (now) {
+      if (done) return;
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(target * eased));
+      if (p < 1) requestAnimationFrame(step);
+      else finish();
+    };
+    requestAnimationFrame(step);
+    setTimeout(finish, duration + 250);
+  };
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { run(en.target); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.4 });
+  nodes.forEach(function (n) { io.observe(n); });
+}
+
+/* ---------- 活动筛选 ---------- */
+function filterActivities(type, activeTab) {
+  const grid = byId('activityGrid');
+  if (!grid) return;
+  const list = type === '全部' ? DATA.activities : DATA.activities.filter(function (a) { return a.type === type; });
+  grid.innerHTML = activityGrid(list);
+  const tabs = document.querySelectorAll('.filter-tabs button');
+  Array.prototype.forEach.call(tabs, function (b) {
+    b.setAttribute('aria-selected', String(b === activeTab));
+  });
+  initReveal();
+}
+
+/* ---------- 活动详情弹窗 ---------- */
+function openActivity(id) {
+  const dlg = byId('activityDialog');
+  const a = DATA.activities.filter(function (x) { return x.id === id; })[0];
+  if (!dlg || !a) return;
+  byId('dialogBadge').textContent = a.type + ' · ' + (a.status === 'open' ? '报名中' : '已结束');
+  byId('dialogTitle').textContent = a.title;
+  byId('dialogBody').innerHTML =
+    '<div class="dialog__meta">' +
+      '<span>' + icon('calendar') + fmtDate(a.date) + '</span>' +
+      '<span>' + icon('clock') + a.time + '</span>' +
+      '<span>' + icon('pin') + a.place + '</span>' +
+    '</div>' +
+    a.detail.map(function (p) { return '<p>' + p + '</p>'; }).join('') +
+    (a.status === 'open'
+      ? '<a class="btn btn--cta" style="margin-top:24px" href="#/join" data-close-dialog>我要报名' + icon('arrow') + '</a>'
+      : '<p style="margin-top:20px;font-size:.8125rem">该活动已结束，相关回顾与资料请到「学习资源」查看。</p>');
+  if (typeof dlg.showModal === 'function') dlg.showModal();
+  else dlg.setAttribute('open', '');
+}
+
+function initDialog() {
+  const dlg = byId('activityDialog');
+  if (!dlg) return;
+  const closeBtn = byId('dialogClose');
+  if (closeBtn) closeBtn.addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) {
+    // 点击遮罩关闭：dialog 自身的空白区域
+    if (e.target === dlg) dlg.close();
+  });
+  dlg.addEventListener('click', function (e) {
+    if (e.target.closest('[data-close-dialog]')) dlg.close();
+  });
+}
+
+/* ---------- 招新倒计时 ---------- */
+function initCountdown() {
+  const box = byId('countdown');
+  if (!box) return;
+  if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+  const end = new Date(DATA.join.deadline).getTime();
+  const f = {
+    d: box.querySelector('[data-cd="d"]'),
+    h: box.querySelector('[data-cd="h"]'),
+    m: box.querySelector('[data-cd="m"]'),
+    s: box.querySelector('[data-cd="s"]')
+  };
+  const pad = function (n) { return n < 10 ? '0' + n : String(n); };
+  const tick = function () {
+    const left = end - Date.now();
+    if (left <= 0) {
+      box.classList.add('is-over');
+      if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+      return;
+    }
+    const total = Math.floor(left / 1000);
+    if (f.d) f.d.textContent = String(Math.floor(total / 86400));
+    if (f.h) f.h.textContent = pad(Math.floor((total % 86400) / 3600));
+    if (f.m) f.m.textContent = pad(Math.floor((total % 3600) / 60));
+    if (f.s) f.s.textContent = pad(total % 60);
+  };
+  tick();
+  countdownTimer = setInterval(tick, 1000);
+}
+
+/* ---------- 导航高亮 ---------- */
+function setActiveNav(path) {
+  const links = document.querySelectorAll('.nav-desktop a, .drawer__nav a');
+  Array.prototype.forEach.call(links, function (a) {
+    const href = a.getAttribute('href') || '';
+    const p = href.replace(/^#/, '');
+    if (p === path) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
+  });
+}
+
+/* ---------- 渲染 ---------- */
+function render(isFirst) {
+  const main = byId('main');
+  if (!main) return;
+  const path = currentPath();
+  const route = ROUTES[path];
+  main.innerHTML = route ? route.view() : viewNotFound();
+
+  document.title = route ? route.title : '页面不存在 | 福州理工学院软件协会';
+  const md = document.querySelector('meta[name="description"]');
+  if (md) md.setAttribute('content', route ? route.desc : '页面不存在，请返回首页。');
+  const ogt = document.querySelector('meta[property="og:title"]');
+  if (ogt) ogt.setAttribute('content', route ? route.title : '页面不存在');
+  const ogd = document.querySelector('meta[property="og:description"]');
+  if (ogd) ogd.setAttribute('content', route ? route.desc : '');
+
+  setActiveNav(path);
+  initReveal();
+  initCounters();
+  initCountdown();
+
+  if (isFirst) {
+    window.scrollTo(0, 0);
+  } else {
+    window.scrollTo(0, 0);
+    main.focus({ preventScroll: true });
+  }
+}
+
+/* ---------- 全局事件 ---------- */
+function initGlobalEvents() {
+  document.addEventListener('click', function (e) {
+    const tab = e.target.closest('.filter-tabs button');
+    if (tab) {
+      filterActivities(tab.getAttribute('data-type'), tab);
+      return;
+    }
+    const act = e.target.closest('[data-activity]');
+    if (act) {
+      openActivity(act.getAttribute('data-activity'));
+    }
+  });
+
+  const header = byId('siteHeader');
+  const backTop = byId('backTop');
+  const onScroll = function () {
+    const y = window.pageYOffset || document.documentElement.scrollTop;
+    if (header) header.classList.toggle('is-scrolled', y > 8);
+    if (backTop) backTop.classList.toggle('is-visible', y > 560);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  if (backTop) {
+    backTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: prefersReduced() ? 'auto' : 'smooth' });
+      const main = byId('main');
+      if (main) main.focus({ preventScroll: true });
+    });
+  }
+
+  window.addEventListener('hashchange', function () { render(false); });
+}
+
+function boot() {
+  document.documentElement.classList.add('js');
+  initTheme();
+  initDrawer();
+  initDialog();
+  initGlobalEvents();
+  render(true);
+  firstRender = false;
+}
+
+if (typeof globalThis === 'undefined' || !globalThis.__NO_BOOT__) {
+  boot();
+}
+</script>
+</body>
+</html>
